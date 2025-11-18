@@ -13,7 +13,7 @@ class UI(Node):
         self.publisher1 = self.create_publisher(Twist, '/turtle1/cmd_vel', 10) 
         self.publisher2 = self.create_publisher(Twist, '/turtle2/cmd_vel', 10)
 
-        # initializing needed parameters
+        # initializing variables
         self.turtle_num = None      # turtle number
         self.twist = Twist()        # turtle velocity (linear and angular)
         self.stop = Twist()         # turtle stop command (twist with '0' values)
