@@ -61,7 +61,7 @@ class UI(Node):
             self.timer.cancel()
             self.tim_active = False
             self.get_logger().info("Movement finished")
-'''
+
 def main(args = None):
     rclpy.init(args = args)
     Ui = UI()
@@ -74,4 +74,4 @@ def main(args = None):
 
 if __name__ == '__main__':
     main()
-    '''
+    
