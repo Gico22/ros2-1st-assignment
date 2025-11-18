@@ -45,22 +45,22 @@ class Distance(Node):
         self.d_publisher.publish(msg_d)
 
         # check if the turtles are too close from each other
-        if self.d <= 1:
+        if self.d <= 0.5:
             if self.t_num == 1:
                 self.v1_publisher.publish(self.stop)
                 self.get_logger().info('Stopping turtle1')
             elif self.t_num == 2:
                 self.v2_publisher.publish(self.stop)
-                self.get_logger().info('Stopping turtle1')
+                self.get_logger().info('Stopping turtle2')
         
         # check if the turtles are too close from the boundaries
         if self.x1 < 1 or self.x1 > 10 or self.y1 < 1 or self.y1 > 10:
             self.v1_publisher.publish(self.stop)
-            self.get_logger().info('Stopping turle1')
+            self.get_logger().info('Stopping turtle1')
         
         if self.x2 < 1 or self.x2 > 10 or self.y2 < 1 or self.y2 > 10:
             self.v2_publisher.publish(self.stop)
-            self.get_logger().info('Stopping turle2')
+            self.get_logger().info('Stopping turtle2')
 
     def turtle1_callback(self, msg1):
         self.x1 = msg1.x
