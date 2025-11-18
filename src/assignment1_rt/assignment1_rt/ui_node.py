@@ -36,7 +36,7 @@ class UI(Node):
         # user input for selecting velocity
         self.twist.linear.x = float(input("Select the linear velocity"))
         self.twist.angular.z = float(input("Select the angular velocity"))
-'''
+
         # publish on the topic
         self.start = time()
         self.tim_active = True
@@ -61,7 +61,7 @@ class UI(Node):
             self.timer.cancel()
             self.tim_active = False
             self.get_logger().info("Movement finished")
-
+'''
 def main(args = None):
     rclpy.init(args = args)
     Ui = UI()
