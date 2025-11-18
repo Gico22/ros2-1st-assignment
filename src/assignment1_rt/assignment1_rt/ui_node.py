@@ -22,7 +22,7 @@ class UI(Node):
         # initializing flags
         self.timer = None
         self.tim_active = False         
-        '''
+        
     def user_interface(self):
 
         # user input for selecting the turtle
@@ -33,15 +33,15 @@ class UI(Node):
                 break
             print("Invalid input, please select '1' or '2'")
 
-        # user input forf selecting velocity
+        # user input for selecting velocity
         self.twist.linear.x = float(input("Select the linear velocity"))
         self.twist.angular.z = float(input("Select the angular velocity"))
-
+'''
         # publish on the topic
         self.start = time()
         self.tim_active = True
         self.timer = self.create_timer(0.1, self.vel_pub) 
-
+        
     def vel_pub(self):
 
         # publish messages for 1 second
