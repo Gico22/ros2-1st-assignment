@@ -1,6 +1,6 @@
 import rclpy
 from rclpy.node import Node
-from std_msgs.msg import String
+from std_msgs.msg import Int32
 from geometry_msgs.msg import Twist
 from time import time
 
@@ -12,6 +12,7 @@ class UI(Node):
         # create publishers for the two turtles
         self.publisher1 = self.create_publisher(Twist, '/turtle1/cmd_vel', 10) 
         self.publisher2 = self.create_publisher(Twist, '/turtle2/cmd_vel', 10)
+        self.t_publisher = self.create_publisher(Int32, 'moving_turtle', 10)
 
         # initializing variables
         self.turtle_num = None      # turtle number
@@ -37,7 +38,12 @@ class UI(Node):
         self.twist.linear.x = float(input("Select the linear velocity"))
         self.twist.angular.z = float(input("Select the angular velocity"))
 
-        # publish on the topic
+        # publish the moving turtle
+        msg_t = Int32()
+        msg_t.data = self.turtle_num
+        self.t_publisher.publish(msg_t)
+
+        # publish the velocity
         self.start = time()
         self.tim_active = True
         self.timer = self.create_timer(0.1, self.vel_pub) 
