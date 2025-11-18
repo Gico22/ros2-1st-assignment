@@ -4,10 +4,11 @@ from std_msgs.msg import Float32
 from std_msgs.msg import String
 from geometry_msgs.msg import Twist
 from turtlesim.msg import Pose
+import math as mt
 
 from time import time
 
-class distance(Node):
+class Distance(Node):
 
     def __init__(self):
         super().__init__('Distance')
@@ -26,25 +27,39 @@ class distance(Node):
         # initializing variables
         self.d = Float32()          # distance
         self.stop = Twist()         # turtle stop command (twist with '0' values)
-        x1, x2, y1, y2 = Float32(), Float32(), Float32(), Float32()
+        self.x1, self.x2, self.y1, self.y2 = Float32(), Float32(), Float32(), Float32()
         
+    def distance_control(self):
+        self.d = mt.sqrt((self.x1 - self.x2)**2 + (self.y1 - self.y2)**2)
+        self.d_publisher.publish(self.d)
 
+        # check if the turtles are too close from each other
+        if self.d <= 1:
+            self.v1_publisher.publish(self.stop)
+            self.v2_publisher.publish(self.stop)
+            self.get_logger().info('Stopping the turtles')
+        
+        # check if the turtles are too close from the boundaries
+        if self.x1 < 1 or self.x1 > 10 or self.y1 < 1 or self.y1 > 10:
+            self.v1_publisher.publish(self.stop)
+            self.get_logger().info('Stopping turle1')
+        
+        if self.x2 < 1 or self.x2 > 10 or self.y2 < 1 or self.y2 > 10:
+            self.v2_publisher.publish(self.stop)
+            self.get_logger().info('Stopping turle2')
 
     def turtle1_callback(self, msg1):
-        x1 = msg1.x
-        y1 = msg1.y
+        self.x1 = msg1.x
+        self.y1 = msg1.y
     
     def turtle2_callback(self, msg2):
-        x2 = msg2.x
-        y2 = msg2.y
+        self.x2 = msg2.x
+        self.y2 = msg2.y
         
-        
-        
-
 def main(args=None):
     rclpy.init(args=args)
-    minimal_publisher = MinimalPublisher()
-    rclpy.spin(minimal_publisher)
+    Dist = Distance()
+    rclpy.spin(Dist)
     rclpy.shutdown()
 
 if __name__ == '__main__':
