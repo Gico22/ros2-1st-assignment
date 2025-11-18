@@ -22,7 +22,7 @@ class UI(Node):
         # initializing flags
         self.timer = None
         self.tim_active = False         
-
+        '''
     def user_interface(self):
 
         # user input for selecting the turtle
@@ -74,3 +74,4 @@ def main(args = None):
 
 if __name__ == '__main__':
     main()
+    '''
