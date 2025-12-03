@@ -9,14 +9,14 @@ class Distance(Node):
     def __init__(self):
         super().__init__('Distance')
         # create publishers for the two turtles and distance
-        self.v1_publisher = self.create_publisher(Twist, '/turtle1/cmd_vel', 10) 
-        self.v2_publisher = self.create_publisher(Twist, '/turtle2/cmd_vel', 10) 
-        self.d_publisher = self.create_publisher(Float32, 'distance', 10) 
+        self.v1_publisher = self.create_publisher(Twist, '/turtle1/cmd_vel', 1) 
+        self.v2_publisher = self.create_publisher(Twist, '/turtle2/cmd_vel', 1) 
+        self.d_publisher = self.create_publisher(Float32, 'distance', 1) 
 
         # create subscribers
-        self.p1_subscription = self.create_subscription(Pose, '/turtle1/pose', self.turtle1_callback, 10)
-        self.p2_subscription = self.create_subscription(Pose, '/turtle2/pose', self.turtle2_callback, 10)
-        self.t_subscription = self.create_subscription(Int32, 'moving_turtle', self.turtle_num_callback, 10)
+        self.p1_subscription = self.create_subscription(Pose, '/turtle1/pose', self.turtle1_callback, 1)
+        self.p2_subscription = self.create_subscription(Pose, '/turtle2/pose', self.turtle2_callback, 1)
+        self.t_subscription = self.create_subscription(Int32, 'moving_turtle', self.turtle_num_callback, 1)
 
         # initializing variables
         self.distance = 0.0                # distance
@@ -27,7 +27,6 @@ class Distance(Node):
         # initializing flags
         self.pose1_received = False
         self.pose2_received = False
-        self.stop_once = False
 
         # create timer
         self.timer = self.create_timer(0.05, self.distance_control)
@@ -42,7 +41,7 @@ class Distance(Node):
         self.d_publisher.publish(msg_d)
 
         # check if the turtles are too close from each other
-        if self.distance <= 0.5 and not self.stop_once:
+        if self.distance <= 0.5:
             if self.moving_t == 1:
                 self.v1_publisher.publish(self.stop)
                 self.get_logger().info('Stopping turtle1')
@@ -72,13 +71,12 @@ class Distance(Node):
 
     def turtle_num_callback(self, msg_t):
         self.moving_t = msg_t.data
-        self.stop_once = False
 
 def main(args=None):
-    rclpy.init(args=args)
+    rclpy.init(args = args)
     Dist = Distance()
     rclpy.spin(Dist)
     rclpy.shutdown()
 
 if __name__ == '__main__':
-    main()''''''
+    main()
