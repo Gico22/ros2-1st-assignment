@@ -10,19 +10,14 @@ class UI(Node):
         super().__init__('UI')
 
         # create publishers for the two turtles
-        self.publisher1 = self.create_publisher(Twist, '/turtle1/cmd_vel', 1) 
-        self.publisher2 = self.create_publisher(Twist, '/turtle2/cmd_vel', 1)
-        self.t_publisher = self.create_publisher(Int32, 'moving_turtle', 1)
-
-        # create subscriber
-        self.d_subscription = self.create_subscription(Float32, 'Distance', self.d_callback, 1)
+        self.publisher1 = self.create_publisher(Twist, '/turtle1/cmd_vel', 10) 
+        self.publisher2 = self.create_publisher(Twist, '/turtle2/cmd_vel', 10)
+        self.t_publisher = self.create_publisher(Int32, 'moving_turtle', 10)
 
         # initializing variables
-        self.turtle_num = None      # turtle number
+        self.turtle_num = None      # moving turtle
         self.twist = Twist()        # turtle velocity (linear and angular)
         self.stop = Twist()         # turtle stop command (twist with '0' values)
-        self.start = 0.0            # time
-        self.distance = None        # distance
 
         # create timer
         self.timer = self.create_timer(0.1, self.user_interface) 
@@ -31,7 +26,7 @@ class UI(Node):
 
         # user input for selecting the turtle
         while True:
-            turtle = input("Select a turtle, available options: '1' or '2': ")
+            turtle = input("Select a turtle, available options '1' or '2': ")
             if turtle in {"1", "2"}:
                 self.turtle_num = int(turtle)
                 break
@@ -67,9 +62,6 @@ class UI(Node):
 
         # reinitialize twist to remove previous values
         self.twist = Twist()
-
-    def d_callback(self, dist):
-        self.distance = dist.data
 
 def main(args = None):
     rclpy.init(args = args)
