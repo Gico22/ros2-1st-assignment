@@ -23,10 +23,10 @@ setup(
         ],
     },
     entry_points={
-        'console_scripts': [
-            'ui_node = assignment1_rt.ui_node:main',
-            'distance_node = assignment1_rt.distance_node:main',
-            'turtle_spawn = assignment1_rt.turtle_spawn:main',
-        ],
-    },
+    'console_scripts': [
+        'turtle_spawn = assignment1_rt.turtle_spawn:main',
+        'ui = assignment1_rt.ui_node:main',
+        'distance = assignment1_rt.distance_node:main',
+    ],
+},
 )

@@ -1,0 +1,21 @@
+running egg_info
+writing ../../build/assignment1_rt/assignment1_rt.egg-info/PKG-INFO
+writing dependency_links to ../../build/assignment1_rt/assignment1_rt.egg-info/dependency_links.txt
+writing entry points to ../../build/assignment1_rt/assignment1_rt.egg-info/entry_points.txt
+writing requirements to ../../build/assignment1_rt/assignment1_rt.egg-info/requires.txt
+writing top-level names to ../../build/assignment1_rt/assignment1_rt.egg-info/top_level.txt
+reading manifest file '../../build/assignment1_rt/assignment1_rt.egg-info/SOURCES.txt'
+writing manifest file '../../build/assignment1_rt/assignment1_rt.egg-info/SOURCES.txt'
+running build
+running build_py
+running install
+running install_lib
+running install_data
+running install_egg_info
+removing '/home/ubuntu/ros2_ws/install/assignment1_rt/lib/python3.12/site-packages/assignment1_rt-0.0.0-py3.12.egg-info' (and everything under it)
+Copying ../../build/assignment1_rt/assignment1_rt.egg-info to /home/ubuntu/ros2_ws/install/assignment1_rt/lib/python3.12/site-packages/assignment1_rt-0.0.0-py3.12.egg-info
+running install_scripts
+Installing distance script to /home/ubuntu/ros2_ws/install/assignment1_rt/lib/assignment1_rt
+Installing turtle_spawn script to /home/ubuntu/ros2_ws/install/assignment1_rt/lib/assignment1_rt
+Installing ui script to /home/ubuntu/ros2_ws/install/assignment1_rt/lib/assignment1_rt
+writing list of installed files to '/home/ubuntu/ros2_ws/build/assignment1_rt/install.log'

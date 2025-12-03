@@ -1,4 +1,4 @@
-import rclpy
+'''import rclpy
 from rclpy.node import Node
 from std_msgs.msg import Int32
 from std_msgs.msg import Float32
@@ -99,6 +99,82 @@ def main(args = None):
         Ui.user_interface()
         while Ui.tim_active and rclpy.ok():
             rclpy.spin_once(Ui)
+    rclpy.shutdown()
+
+if __name__ == '__main__':
+    main()'''
+import rclpy
+from rclpy.node import Node
+from geometry_msgs.msg import Twist
+from std_msgs.msg import Int32
+import time
+
+class UI(Node):
+    def __init__(self):
+        super().__init__('ui')
+
+        self.pub_t1 = self.create_publisher(Twist, '/turtle1/cmd_vel', 10)
+        self.pub_t2 = self.create_publisher(Twist, '/turtle2/cmd_vel', 10)
+        self.pub_moving = self.create_publisher(Int32, 'moving_turtle', 10)
+
+        self.timer = self.create_timer(0.1, self.loop)
+
+        self.active = False
+        self.active_turtle = None
+        self.cmd = Twist()
+        self.stop_cmd = Twist()
+        self.stop_cmd.linear.x = 0.0
+        self.stop_cmd.angular.z = 0.0
+        self.end_time = 0.0
+
+    def loop(self):
+        # If currently sending a command
+        if self.active:
+            now = time.time()
+
+            if now < self.end_time:
+                if self.active_turtle == 1:
+                    self.pub_t1.publish(self.cmd)
+                else:
+                    self.pub_t2.publish(self.cmd)
+            else:
+                # Stop the turtle
+                if self.active_turtle == 1:
+                    self.pub_t1.publish(self.stop_cmd)
+                else:
+                    self.pub_t2.publish(self.stop_cmd)
+
+                self.active = False
+                self.get_logger().info("Command finished. Enter new command.")
+            return
+
+        # Otherwise wait for user input (non-blocking)
+        turtle = input("Choose turtle (1 or 2): ")
+        if turtle not in ['1', '2']:
+            print("Invalid, try again.")
+            return
+
+        self.active_turtle = int(turtle)
+        lin = float(input("Linear velocity: "))
+        ang = float(input("Angular velocity: "))
+
+        self.cmd.linear.x = lin
+        self.cmd.angular.z = ang
+
+        # publish which turtle is moving
+        msg = Int32()
+        msg.data = self.active_turtle
+        self.pub_moving.publish(msg)
+
+        # activate 1-second command
+        self.end_time = time.time() + 1.0
+        self.active = True
+
+def main():
+    rclpy.init()
+    node = UI()
+    rclpy.spin(node)
+    node.destroy_node()
     rclpy.shutdown()
 
 if __name__ == '__main__':

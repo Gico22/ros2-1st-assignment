@@ -1,0 +1,23 @@
+[0.527s] Invoking command in '/home/ubuntu/ros2_ws/src/assignment1_rt': PYTHONPATH=/home/ubuntu/ros2_ws/build/assignment1_rt/prefix_override:/usr/lib/python3/dist-packages/colcon_core/task/python/colcon_distutils_commands:/home/ubuntu/ros2_ws/install/assignment1_rt/lib/python3.12/site-packages:${PYTHONPATH} /usr/bin/python3 -W ignore:setup.py install is deprecated -W ignore:easy_install command is deprecated setup.py egg_info --egg-base ../../build/assignment1_rt build --build-base /home/ubuntu/ros2_ws/build/assignment1_rt/build install --record /home/ubuntu/ros2_ws/build/assignment1_rt/install.log --single-version-externally-managed install_data
+[0.682s] running egg_info
+[0.691s] writing ../../build/assignment1_rt/assignment1_rt.egg-info/PKG-INFO
+[0.692s] writing dependency_links to ../../build/assignment1_rt/assignment1_rt.egg-info/dependency_links.txt
+[0.692s] writing entry points to ../../build/assignment1_rt/assignment1_rt.egg-info/entry_points.txt
+[0.693s] writing requirements to ../../build/assignment1_rt/assignment1_rt.egg-info/requires.txt
+[0.693s] writing top-level names to ../../build/assignment1_rt/assignment1_rt.egg-info/top_level.txt
+[0.719s] reading manifest file '../../build/assignment1_rt/assignment1_rt.egg-info/SOURCES.txt'
+[0.721s] writing manifest file '../../build/assignment1_rt/assignment1_rt.egg-info/SOURCES.txt'
+[0.722s] running build
+[0.724s] running build_py
+[0.727s] running install
+[0.730s] running install_lib
+[0.741s] running install_data
+[0.742s] running install_egg_info
+[0.750s] removing '/home/ubuntu/ros2_ws/install/assignment1_rt/lib/python3.12/site-packages/assignment1_rt-0.0.0-py3.12.egg-info' (and everything under it)
+[0.752s] Copying ../../build/assignment1_rt/assignment1_rt.egg-info to /home/ubuntu/ros2_ws/install/assignment1_rt/lib/python3.12/site-packages/assignment1_rt-0.0.0-py3.12.egg-info
+[0.759s] running install_scripts
+[0.846s] Installing distance script to /home/ubuntu/ros2_ws/install/assignment1_rt/lib/assignment1_rt
+[0.846s] Installing turtle_spawn script to /home/ubuntu/ros2_ws/install/assignment1_rt/lib/assignment1_rt
+[0.847s] Installing ui script to /home/ubuntu/ros2_ws/install/assignment1_rt/lib/assignment1_rt
+[0.848s] writing list of installed files to '/home/ubuntu/ros2_ws/build/assignment1_rt/install.log'
+[0.868s] Invoked command in '/home/ubuntu/ros2_ws/src/assignment1_rt' returned '0': PYTHONPATH=/home/ubuntu/ros2_ws/build/assignment1_rt/prefix_override:/usr/lib/python3/dist-packages/colcon_core/task/python/colcon_distutils_commands:/home/ubuntu/ros2_ws/install/assignment1_rt/lib/python3.12/site-packages:${PYTHONPATH} /usr/bin/python3 -W ignore:setup.py install is deprecated -W ignore:easy_install command is deprecated setup.py egg_info --egg-base ../../build/assignment1_rt build --build-base /home/ubuntu/ros2_ws/build/assignment1_rt/build install --record /home/ubuntu/ros2_ws/build/assignment1_rt/install.log --single-version-externally-managed install_data

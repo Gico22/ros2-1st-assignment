@@ -1,0 +1,19 @@
+running develop
+running egg_info
+writing assignment1_rt.egg-info/PKG-INFO
+writing dependency_links to assignment1_rt.egg-info/dependency_links.txt
+writing entry points to assignment1_rt.egg-info/entry_points.txt
+writing requirements to assignment1_rt.egg-info/requires.txt
+writing top-level names to assignment1_rt.egg-info/top_level.txt
+reading manifest file 'assignment1_rt.egg-info/SOURCES.txt'
+writing manifest file 'assignment1_rt.egg-info/SOURCES.txt'
+running build_ext
+Creating /home/ubuntu/ros2_ws/install/assignment1_rt/lib/python3.12/site-packages/assignment1-rt.egg-link (link to .)
+Installing distance script to /home/ubuntu/ros2_ws/install/assignment1_rt/lib/assignment1_rt
+Installing turtle_spawn script to /home/ubuntu/ros2_ws/install/assignment1_rt/lib/assignment1_rt
+Installing ui script to /home/ubuntu/ros2_ws/install/assignment1_rt/lib/assignment1_rt
+
+Installed /home/ubuntu/ros2_ws/build/assignment1_rt
+running symlink_data
+symbolically linking /home/ubuntu/ros2_ws/build/assignment1_rt/resource/assignment1_rt -> /home/ubuntu/ros2_ws/install/assignment1_rt/share/ament_index/resource_index/packages
+symbolically linking /home/ubuntu/ros2_ws/build/assignment1_rt/package.xml -> /home/ubuntu/ros2_ws/install/assignment1_rt/share/assignment1_rt
