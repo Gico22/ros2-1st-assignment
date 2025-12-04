@@ -68,10 +68,11 @@ class Distance(Node):
         if self.safe_pose() and self.not_safe:
             if self.turtle_num == 1:
                 self.v1_publisher.publish(self.stop)
+                self.get_logger().info('Stopping turtle1')
             elif self.turtle_num == 2:
                 self.v2_publisher.publish(self.stop)
+                self.get_logger().info('Stopping turtle2')
             self.not_safe = False
-            self.get_logger().info('Stopping turtle1')
 
     def pose1_callback(self, msg1):
         self.x1 = msg1.x
@@ -94,13 +95,6 @@ class Distance(Node):
         self.safety_twist.linear.x = -vel2.linear.x
         self.safety_twist.angular.z = -vel2.angular.z
 
-    def current_pub(self):
-        if self.turtle_num == 1:
-            return self.v1_pub
-        elif self.turtle_num == 2:
-            return self.v2_pub
-        return None
-    
     def safe_pose(self):
         return self.distance > 1.2 and 1.2 < self.x1 < 9.8 and 1.2 < self.x2 < 9.8 and 1.2 < self.y1 < 9.8 and 1.2 < self.y2 < 9.8
 
