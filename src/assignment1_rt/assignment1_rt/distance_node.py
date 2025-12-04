@@ -4,7 +4,6 @@ from turtlesim.msg import Pose
 from geometry_msgs.msg import Twist
 from std_msgs.msg import Float32, Int32
 import math
-import time
 
 class Distance(Node):
     def __init__(self):
@@ -23,17 +22,18 @@ class Distance(Node):
 
         # initializing variables
         self.distance = 0.0                             # distance
+        self.safety_twist = Twist()                     # input velocity (linear and angular)
         self.stop = Twist()                             # turtle stop command (twist with '0' values)
         self.turtle_num = 0                             # moving turtle
         self.x1 = self.x2 = self.y1 = self.y2 = 0.0     # turtles positions
-        self.safety_twist = Twist()                     # input velocity (linear and angular)
+        self.not_safe = False
 
         # initializing flags
         self.pose1_received = False
         self.pose2_received = False
 
         # create timer
-        self.timer = self.create_timer(0.05, self.distance_control)
+        self.timer = self.create_timer(0.01, self.distance_control)
 
     def distance_control(self):
         if not (self.pose1_received and self.pose2_received):
@@ -46,34 +46,32 @@ class Distance(Node):
 
         # check if the turtles are too close from each other
         if self.distance <= 0.5:
+            self.not_safe = True
             if self.turtle_num == 1:
                 self.v1_publisher.publish(self.safety_twist)
-                while self.distance <= 0.5:
-                    self.distance = math.sqrt((self.x1 - self.x2)**2 + (self.y1 - self.y2)**2)
-                self.v1_publisher.publish(self.stop)
                 self.get_logger().info('Stopping turtle1')
             elif self.turtle_num == 2:
                 self.v2_publisher.publish(self.safety_twist)
-                while self.distance <= 0.5:
-                    self.distance = math.sqrt((self.x1 - self.x2)**2 + (self.y1 - self.y2)**2)
-                self.v2_publisher.publish(self.stop)
                 self.get_logger().info('Stopping turtle2')
-            self.stop_once = True
 
         # check if the turtles are too close from the boundaries
-        if self.x1 < 1 or self.x1 > 10 or self.y1 < 1 or self.y1 > 10:
+        if (self.x1 < 1 or self.x1 > 10 or self.y1 < 1 or self.y1 > 10):
+            self.not_safe = True
             self.v1_publisher.publish(self.safety_twist)
-            while self.distance <= 0.5:
-                self.distance = math.sqrt((self.x1 - self.x2)**2 + (self.y1 - self.y2)**2)
-            self.v1_publisher.publish(self.stop)
             self.get_logger().info('Stopping turtle1')
 
-        if self.x2 < 1 or self.x2 > 10 or self.y2 < 1 or self.y2 > 10:
+        if (self.x2 < 1 or self.x2 > 10 or self.y2 < 1 or self.y2 > 10):
+            self.not_safe = True
             self.v2_publisher.publish(self.safety_twist)
-            while self.distance <= 0.5:
-                self.distance = math.sqrt((self.x1 - self.x2)**2 + (self.y1 - self.y2)**2)
-            self.v2_publisher.publish(self.stop)
             self.get_logger().info('Stopping turtle2')
+
+        if self.safe_pose() and self.not_safe:
+            if self.turtle_num == 1:
+                self.v1_publisher.publish(self.stop)
+            elif self.turtle_num == 2:
+                self.v2_publisher.publish(self.stop)
+            self.not_safe = False
+            self.get_logger().info('Stopping turtle1')
 
     def pose1_callback(self, msg1):
         self.x1 = msg1.x
@@ -90,11 +88,21 @@ class Distance(Node):
 
     def vel1_callback(self, vel1):
         self.safety_twist.linear.x = -vel1.linear.x
-        self.safety_twist.angular.x = -vel1.angular.z
+        self.safety_twist.angular.z = -vel1.angular.z
 
     def vel2_callback(self, vel2):
         self.safety_twist.linear.x = -vel2.linear.x
-        self.safety_twist.angular.x = -vel2.angular.z
+        self.safety_twist.angular.z = -vel2.angular.z
+
+    def current_pub(self):
+        if self.turtle_num == 1:
+            return self.v1_pub
+        elif self.turtle_num == 2:
+            return self.v2_pub
+        return None
+    
+    def safe_pose(self):
+        return self.distance > 1.2 and 1.2 < self.x1 < 9.8 and 1.2 < self.x2 < 9.8 and 1.2 < self.y1 < 9.8 and 1.2 < self.y2 < 9.8
 
 def main(args=None):
     rclpy.init(args = args)
